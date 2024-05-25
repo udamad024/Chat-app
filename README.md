@@ -4,7 +4,7 @@
 
 [Video Tutorial on Youtube](https://youtu.be/HwCqsOis894)
 
-You might have to install node if the below install command does not work. 
+### You might have to install node if the below install command does not work. 
 
 1. Install Node.js and npm
 Download Node.js:
