@@ -4,6 +4,8 @@ import React from 'react';
 import MessageContainer from "../../components/messages/MessageContainer";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { ControlledBoard } from "../../components/kanban/Board"; // Import as named export
+import Board from "../../components/kanban/Board";
+import Column from "../../components/kanban/Column";
 
 const Home = () => {
     return (
@@ -28,8 +30,8 @@ const Home = () => {
                     <MessageContainer />
                 </div>
             </div>
-            <div style={{ marginLeft: '22%', width: '100%', height: '100%' }}>
-                <ControlledBoard />
+            <div style={{ marginLeft: '21.3%'}}>
+				<Board />
             </div>
         </div>
     );
