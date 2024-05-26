@@ -28,7 +28,7 @@ const Home = () => {
                     <MessageContainer />
                 </div>
             </div>
-            <div style={{ marginLeft: '30%', width: '70%', height: '100%' }}>
+            <div style={{ marginLeft: '22%', width: '100%', height: '100%' }}>
                 <ControlledBoard />
             </div>
         </div>
