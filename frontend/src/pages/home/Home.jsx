@@ -1,29 +1,35 @@
+// src/pages/home/Home.jsx
+
 import React from 'react';
 import MessageContainer from "../../components/messages/MessageContainer";
 import Sidebar from "../../components/sidebar/Sidebar";
+import { ControlledBoard } from "../../components/kanban/Board"; // Import as named export
 
 const Home = () => {
     return (
-        <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            width: '30%',
-            height: '100%', // Ensure it takes up the full height of the screen
-            backgroundColor: 'gray', // Add any background color or other styles you need
-        }}>
-            <div style={{ flex: 'none' }}>
-                <Sidebar />
-            </div>
+        <div style={{ display: 'flex', height: '100vh' }}>
             <div style={{
-                flex: '1 1 auto',
-                maxHeight: '400px', // Set the maximum height you want for the MessageContainer
-                overflowY: 'auto', // Make it scrollable if the content exceeds the max height
-                backgroundColor: 'white', // Add any background color or other styles you need
+                display: 'flex',
+                flexDirection: 'column',
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
+                width: '30%',
+                height: '100%',
+                backgroundColor: 'gray',
             }}>
-                <MessageContainer />
+                <Sidebar />
+                <div style={{
+                    flex: '1 1 auto',
+                    maxHeight: '400px',
+                    overflowY: 'auto',
+                    backgroundColor: 'white',
+                }}>
+                    <MessageContainer />
+                </div>
+            </div>
+            <div style={{ marginLeft: '30%', width: '70%', height: '100%' }}>
+                <ControlledBoard />
             </div>
         </div>
     );
