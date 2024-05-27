@@ -1,21 +1,40 @@
+// Board.jsx
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
+import Card from "./Card";
 
 export default function Board() {
     const [completed, setCompleted] = useState([]);
     const [incomplete, setIncomplete] = useState([]);
     const [backlog, setBacklog] = useState([]);
     const [inReview, setInReview] = useState([]);
+    const [newCardTitle, setNewCardTitle] = useState("");
 
+    // Load state from localStorage
     useEffect(() => {
-        fetch("https://jsonplaceholder.typicode.com/todos")
-            .then((response) => response.json())
-            .then((json) => {
-                setCompleted(json.filter((task) => task.completed));
-                setIncomplete(json.filter((task) => !task.completed));
-            });
+        const savedState = JSON.parse(localStorage.getItem("boardState"));
+        if (savedState) {
+            setCompleted(savedState.completed || []);
+            setIncomplete(savedState.incomplete || []);
+            setBacklog(savedState.backlog || []);
+            setInReview(savedState.inReview || []);
+        }
     }, []);
+
+    // Save state to localStorage
+    useEffect(() => {
+        const boardState = { completed, incomplete, backlog, inReview };
+        localStorage.setItem("boardState", JSON.stringify(boardState));
+    }, [completed, incomplete, backlog, inReview]);
+
+    const handleAddCard = () => {
+        if (newCardTitle.trim()) {
+            const newCard = { id: Date.now(), title: newCardTitle, completed: false };
+            setIncomplete([newCard, ...incomplete]);
+            setNewCardTitle("");
+        }
+    };
 
     const handleDragEnd = (result) => {
         const { destination, source, draggableId } = result;
@@ -27,7 +46,6 @@ export default function Board() {
         const task = findItemById(draggableId, [...incomplete, ...completed, ...inReview, ...backlog]);
 
         setNewState(destination.droppableId, task);
-
     };
 
     function deletePreviousState(sourceDroppableId, taskId) {
@@ -45,8 +63,8 @@ export default function Board() {
                 setBacklog(removeItemById(taskId, backlog));
                 break;
         }
-
     }
+
     function setNewState(destinationDroppableId, task) {
         let updatedTask;
         switch (destinationDroppableId) {
@@ -68,6 +86,7 @@ export default function Board() {
                 break;
         }
     }
+
     function findItemById(id, array) {
         return array.find((item) => item.id == id);
     }
@@ -77,21 +96,32 @@ export default function Board() {
     }
 
     return (
-        <DragDropContext onDragEnd={handleDragEnd}>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flexDirection: "row"
-                
-                }}
-            >
-                <Column title={"TO DO"} tasks={incomplete} id={"1"} />
-                <Column title={"IN PROGRESS"} tasks={inReview} id={"3"} />
-                <Column title={"DONE"} tasks={completed} id={"2"} />
-                <Column title={"BACKLOG"} tasks={backlog} id={"4"} />
-            </div>
-        </DragDropContext>
+        <div>
+            <DragDropContext onDragEnd={handleDragEnd}>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        flexDirection: "row"
+                    }}
+                >
+                    <Column title={"TO DO"} tasks={incomplete} id={"1"}>
+                        <div style={{ padding: "10px" }}>
+                            <input
+                                type="text"
+                                value={newCardTitle}
+                                onChange={(e) => setNewCardTitle(e.target.value)}
+                                placeholder="New card title"
+                            />
+                            <button onClick={handleAddCard}>Add Card</button>
+                        </div>
+                    </Column>
+                    <Column title={"IN PROGRESS"} tasks={inReview} id={"3"} />
+                    <Column title={"DONE"} tasks={completed} id={"2"} />
+                    <Column title={"BACKLOG"} tasks={backlog} id={"4"} />
+                </div>
+            </DragDropContext>
+        </div>
     );
 }

@@ -1,7 +1,7 @@
+// Column.jsx
 import React from "react";
 import styled from "styled-components";
 import Card from "./Card";
-import "./scroll.css";
 import { Droppable } from "react-beautiful-dnd";
 
 const Container = styled.div`
@@ -23,13 +23,13 @@ const Title = styled.h3`
 
 const TaskList = styled.div`
     padding: 3px;
-    transistion: background-color 0.2s ease;
+    transition: background-color 0.2s ease;
     background-color: #f4f5f7;
     flex-grow: 1;
     min-height: 100px;
 `;
 
-export default function Column({ title, tasks, id }) {
+export default function Column({ title, tasks, id, children }) {
     return (
         <Container className="column">
             <Title
@@ -48,8 +48,9 @@ export default function Column({ title, tasks, id }) {
                         {...provided.droppableProps}
                         isDraggingOver={snapshot.isDraggingOver}
                     >
+                        {children}
                         {tasks.map((task, index) => (
-                            <Card key={index} index={index} task={task} />
+                            <Card key={task.id} index={index} task={task} />
                         ))}
                         {provided.placeholder}
                     </TaskList>
