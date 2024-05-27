@@ -1,4 +1,3 @@
-// src/components/kanban/Board.jsx
 
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
