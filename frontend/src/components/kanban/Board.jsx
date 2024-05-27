@@ -83,8 +83,7 @@ export default function Board() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    flexDirection: "row",
-                    width: "1195px",
+                    flexDirection: "row"
                 
                 }}
             >

@@ -7,8 +7,8 @@ import { Droppable } from "react-beautiful-dnd";
 const Container = styled.div`
     background-color: #f4f5f7;
     border-radius: 2.5px;
-    width: 400px;
-    height: 900px;
+    flex: 0 0 25%;
+    height: 100vh;
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;

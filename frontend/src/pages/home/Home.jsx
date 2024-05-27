@@ -6,17 +6,14 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import { ControlledBoard } from "../../components/kanban/Board"; // Import as named export
 import Board from "../../components/kanban/Board";
 import Column from "../../components/kanban/Column";
-
+import "./home.css";
 const Home = () => {
     return (
-        <div style={{ display: 'flex', height: '100vh' }}>
+        <div style={{ display: 'flex', height: '100vh' }} className='responsive-block'>
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',
-                position: 'fixed',
-                bottom: 0,
-                left: 0,
-                width: '30%',
+                flex: '0 0 30%',
                 height: '100%',
                 backgroundColor: 'gray',
             }}>
@@ -30,7 +27,7 @@ const Home = () => {
                     <MessageContainer />
                 </div>
             </div>
-            <div style={{ marginLeft: '21.3%'}}>
+            <div >
 				<Board />
             </div>
         </div>
