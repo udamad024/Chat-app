@@ -88,8 +88,8 @@ export default function Board() {
                 }}
             >
                 <Column title={"TO DO"} tasks={incomplete} id={"1"} />
+                <Column title={"IN PROGRESS"} tasks={inReview} id={"3"} />
                 <Column title={"DONE"} tasks={completed} id={"2"} />
-                <Column title={"IN REVIEW"} tasks={inReview} id={"3"} />
                 <Column title={"BACKLOG"} tasks={backlog} id={"4"} />
             </div>
         </DragDropContext>
