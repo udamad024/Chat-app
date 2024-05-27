@@ -1,3 +1,5 @@
+// src/components/kanban/Card.jsx
+
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
@@ -41,7 +43,15 @@ function bgcolorChange(props) {
                 : "#EAF4FC";
 }
 
-export default function Card({ task, index }) {
+export default function Card({ task, index, isForm, children }) {
+    if (isForm) {
+        return (
+            <Container>
+                {children}
+            </Container>
+        );
+    }
+
     return (
         <Draggable draggableId={`${task.id}`} key={task.id} index={index}>
             {(provided, snapshot) => (

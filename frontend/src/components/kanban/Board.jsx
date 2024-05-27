@@ -1,8 +1,9 @@
-// Board.jsx
+// src/components/kanban/Board.jsx
+
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
-import Card from "./Card";
+import Card from "./Card"; // Import the Card component
 
 export default function Board() {
     const [completed, setCompleted] = useState([]);
@@ -108,13 +109,24 @@ export default function Board() {
                 >
                     <Column title={"TO DO"} tasks={incomplete} id={"1"}>
                         <div style={{ padding: "10px" }}>
-                            <input
-                                type="text"
-                                value={newCardTitle}
-                                onChange={(e) => setNewCardTitle(e.target.value)}
-                                placeholder="New card title"
-                            />
-                            <button onClick={handleAddCard}>Add Card</button>
+                            <Card isForm>
+                                <input
+                                    type="text"
+                                    value={newCardTitle}
+                                    onChange={(e) => setNewCardTitle(e.target.value)}
+                                    placeholder="New card title"
+                                    style={{
+                                        width: "100%",
+                                        padding: "10px",
+                                        marginBottom: "10px",
+                                        borderRadius: "5px",
+                                        border: "1px solid #ccc"
+                                    }}
+                                />
+                                <button onClick={handleAddCard} style={{ padding: "10px", borderRadius: "5px", backgroundColor: "lightblue", border: "none", cursor: "pointer" }}>
+                                    Add Card
+                                </button>
+                            </Card>
                         </div>
                     </Column>
                     <Column title={"IN PROGRESS"} tasks={inReview} id={"3"} />
