@@ -1,7 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -21,6 +20,7 @@ import Sitemark from './SitemarkIcon';
 
 function AppAppBar({ mode, toggleColorMode }) {
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate(); // Use useNavigate hook to navigate programmatically
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -40,10 +40,8 @@ function AppAppBar({ mode, toggleColorMode }) {
     }
   };
 
-  const navigateTo = useNavigate();
-
   const handleSignupClick = () => {
-    navigateTo('/login')
+    navigate('/login'); // Navigate to the /login route
   };
 
   return (
