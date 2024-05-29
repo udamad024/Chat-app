@@ -10,13 +10,27 @@ const useListenMessages = () => {
     const handleNewMessage = (newMessage) => {
       newMessage.shouldShake = true;
 
-      // Play the audio from the audioUrl
-      if (newMessage.audioUrl) {
+      // Check if the recipient is female before playing the audio
+      const isFemaleRecipient = newMessage.receiverGender === "female";
+
+      // Play the audio from the audioUrl if it exists and the recipient is female
+      if (isFemaleRecipient && newMessage.audioUrl) {
         const sound = new Audio(newMessage.audioUrl);
-        sound.play();
+        sound.onerror = (error) => {
+          console.error("Error playing audio:", error);
+        };
+        sound.play().catch((error) => {
+          console.error("Error playing audio:", error);
+        });
       }
 
-      setMessages([...messages, newMessage]);
+      // Check if the new message already exists to avoid duplicates
+      const messageExists = messages.some(
+        (message) => message._id === newMessage._id
+      );
+      if (!messageExists) {
+        setMessages([...messages, newMessage]);
+      }
     };
 
     socket?.on("newMessage", handleNewMessage);
@@ -30,4 +44,3 @@ const useListenMessages = () => {
 };
 
 export default useListenMessages;
-

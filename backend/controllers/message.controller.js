@@ -1,11 +1,12 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
-import { getReceiverSocketId, io } from "../socket/socket.js";
+import User from "../models/user.model.js";
 import AWS from 'aws-sdk';
+import { getReceiverSocketId } from "../socket/socket.js";
+import { io } from "../socket/socket.js";
 
 // Initialize AWS Polly client
 const Polly = new AWS.Polly();
-
 // Initialize AWS S3 client
 const s3 = new AWS.S3();
 
@@ -14,6 +15,15 @@ export const sendMessage = async (req, res) => {
         const { message } = req.body;
         const { id: receiverId } = req.params;
         const senderId = req.user._id;
+
+        // Get the sender's and receiver's genders from the database
+        const sender = await User.findById(senderId);
+        const receiver = await User.findById(receiverId);
+
+        // Ensure sender and receiver exist
+        if (!sender || !receiver) {
+            return res.status(404).json({ error: "Sender or receiver not found" });
+        }
 
         // Synthesize speech from message text using AWS Polly
         const pollyParams = {
@@ -46,9 +56,21 @@ export const sendMessage = async (req, res) => {
         };
 
         const signedUrl = await s3.getSignedUrlPromise('getObject', signedUrlParams);
-		console.log(`Pre-signed URL generated: ${signedUrl}`);
+        console.log(`Pre-signed URL generated: ${signedUrl}`);
 
-        // Create and save new message
+        // Create and save new message with sender and receiver genders
+        const newMessage = new Message({
+            senderId,
+            receiverId,
+            message,
+            audioUrl: signedUrl,
+            senderGender: sender.gender,
+            receiverGender: receiver.gender
+        });
+
+        await newMessage.save();
+
+        // Update conversation or create a new one if it doesn't exist
         let conversation = await Conversation.findOne({
             participants: { $all: [senderId, receiverId] },
         });
@@ -56,18 +78,13 @@ export const sendMessage = async (req, res) => {
         if (!conversation) {
             conversation = await Conversation.create({
                 participants: [senderId, receiverId],
+                senderGender: sender.gender,
+                receiverGender: receiver.gender
             });
         }
 
-        const newMessage = new Message({
-            senderId,
-            receiverId,
-            message,
-            audioUrl: signedUrl // Save pre-signed URL of audio file in message
-        });
-
         conversation.messages.push(newMessage._id);
-        await Promise.all([conversation.save(), newMessage.save()]);
+        await conversation.save();
 
         // Emit newMessage event
         const receiverSocketId = getReceiverSocketId(receiverId);

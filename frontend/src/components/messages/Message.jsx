@@ -16,7 +16,7 @@ const Message = ({ message }) => {
     const isAudioMessage = message.audioUrl && message.audioUrl !== "";
 
     // Check if the recipient is female
-    const isFemaleRecipient = message.recipientGender === "female";
+    const isFemaleRecipient = message.receiverGender === "female";
 
     return (
         <div className={`chat ${chatClassName}`}>
