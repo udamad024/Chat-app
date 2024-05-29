@@ -15,6 +15,9 @@ const Message = ({ message }) => {
     // Check if the message contains an audio file
     const isAudioMessage = message.audioUrl && message.audioUrl !== "";
 
+    // Check if the recipient is female
+    const isFemaleRecipient = message.recipientGender === "female";
+
     return (
         <div className={`chat ${chatClassName}`}>
             <div className='chat-image avatar'>
@@ -23,8 +26,8 @@ const Message = ({ message }) => {
                 </div>
             </div>
             <div className={`chat-bubble ${bubbleBgColor} pb-2 text-white`}>
-                {isAudioMessage ? (
-                    // Render audio player if the message contains an audio file
+                {isAudioMessage && isFemaleRecipient ? (
+                    // Render audio player only if the message contains an audio file and the recipient is female
                     <>
                         <div>{message.message}</div>
                         <audio controls>
@@ -33,7 +36,7 @@ const Message = ({ message }) => {
                         </audio>
                     </>
                 ) : (
-                    // Render text message if the message does not contain an audio file
+                    // Render text message if the message does not contain an audio file or the recipient is not female
                     <div>{message.message}</div>
                 )}
             </div>
