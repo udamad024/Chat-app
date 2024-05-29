@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
     "antd": "^4.21.0",
+    "aws-sdk": "^2.1629.0",
     "chat-app-yt": "file:..",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

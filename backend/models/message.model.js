@@ -16,6 +16,10 @@ const messageSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		audioUrl: {
+			type: String,
+			required: true,
+		},
 		// createdAt, updatedAt
 	},
 	{ timestamps: true }
