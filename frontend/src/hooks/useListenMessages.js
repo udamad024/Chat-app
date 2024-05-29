@@ -1,23 +1,33 @@
 import { useEffect } from "react";
-
 import { useSocketContext } from "../context/SocketContext";
 import useConversation from "../zustand/useConversation";
 
-import notificationSound from "../assets/sounds/notification.mp3";
-
 const useListenMessages = () => {
-	const { socket } = useSocketContext();
-	const { messages, setMessages } = useConversation();
+  const { socket } = useSocketContext();
+  const { messages, setMessages } = useConversation();
 
-	useEffect(() => {
-		socket?.on("newMessage", (newMessage) => {
-			newMessage.shouldShake = true;
-			const sound = new Audio(notificationSound);
-			sound.play();
-			setMessages([...messages, newMessage]);
-		});
+  useEffect(() => {
+    const handleNewMessage = (newMessage) => {
+      newMessage.shouldShake = true;
 
-		return () => socket?.off("newMessage");
-	}, [socket, setMessages, messages]);
+      // Play the audio from the audioUrl
+      if (newMessage.audioUrl) {
+        const sound = new Audio(newMessage.audioUrl);
+        sound.play();
+      }
+
+      setMessages([...messages, newMessage]);
+    };
+
+    socket?.on("newMessage", handleNewMessage);
+
+    return () => {
+      socket?.off("newMessage", handleNewMessage);
+    };
+  }, [socket, setMessages, messages]);
+
+  return null; // This hook does not render anything
 };
+
 export default useListenMessages;
+

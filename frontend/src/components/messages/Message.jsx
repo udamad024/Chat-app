@@ -25,13 +25,16 @@ const Message = ({ message }) => {
             <div className={`chat-bubble ${bubbleBgColor} pb-2 text-white`}>
                 {isAudioMessage ? (
                     // Render audio player if the message contains an audio file
-                    <audio controls>
-                        <source src={message.audioUrl} type="audio/mpeg" />
-                        Your browser does not support the audio element.
-                    </audio>
+                    <>
+                        <div>{message.message}</div>
+                        <audio controls>
+                            <source src={message.audioUrl} type="audio/mpeg" />
+                            Your browser does not support the audio element.
+                        </audio>
+                    </>
                 ) : (
                     // Render text message if the message does not contain an audio file
-                    message.message
+                    <div>{message.message}</div>
                 )}
             </div>
             <div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>{formattedTime}</div>
