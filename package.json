@@ -23,6 +23,7 @@
 		"howler": "^2.2.4",
 		"jsonwebtoken": "^9.0.2",
 		"mongoose": "^8.4.0",
+		"react-mic-recorder": "*",
 		"socket.io": "^4.7.5",
 		"styled-components": "^6.1.11"
 	},

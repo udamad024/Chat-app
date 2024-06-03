@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies for the root directory
-RUN npm install
+RUN npm install --force
 
 # Copy the .env file from the root directory to the working directory
 COPY .env ./
@@ -20,7 +20,7 @@ COPY frontend ./frontend
 WORKDIR /app/frontend
 
 # Install frontend dependencies
-RUN npm install
+RUN npm install --force
 
 # Build the frontend
 RUN npm run build
