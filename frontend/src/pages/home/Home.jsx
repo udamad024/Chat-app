@@ -9,7 +9,7 @@ const Home = () => {
         height: '100vh',
         padding: '5px', // Reduced padding
         boxSizing: 'border-box',
-        margin: '10px',
+        margin: '0px',
     };
     
 
