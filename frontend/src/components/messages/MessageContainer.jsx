@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import useConversation from "../../zustand/useConversation";
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
 import { useAuthContext } from "../../context/AuthContext";
-import SpeechRecorder from "./SpeechRecorder"; // Ensure the import statement is correct
 
 const MessageContainer = () => {
     const { selectedConversation, setSelectedConversation } = useConversation();
@@ -30,7 +29,6 @@ const MessageContainer = () => {
                     </div>
                     <div style={{ flexShrink: 0, padding: '8px 16px', backgroundColor: 'white' }}>
                         <MessageInput />
-                        <SpeechRecorder onRecordStop={(recordedBlob) => console.log(recordedBlob)} /> {/* Example usage */}
                     </div>
                 </>
             )}
