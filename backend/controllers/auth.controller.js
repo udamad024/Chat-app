@@ -15,10 +15,11 @@ AWS.config.update({
 });
 
 const sns = new AWS.SNS();
+const s3 = new AWS.S3(); // Add S3 client
 
 export const signup = async (req, res) => {
   try {
-    const { fullName, username, email, password, confirmPassword, gender } = req.body;
+    const { fullName, username, email, password, confirmPassword, gender, profilePicFile } = req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({ error: "Passwords don't match" });
@@ -33,9 +34,21 @@ export const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // https://avatar-placeholder.iran.liara.run/
-    const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
-    const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
+    let profilePicUrl = ""; // Initialize profile pic URL
+
+    if (profilePicFile) {
+      // Upload profile pic to S3
+      const uploadParams = {
+        Bucket: process.env.AWS_S3_BUCKET,
+        Key: `profile-pictures/${username}-${Date.now()}.png`, // Adjust key format as needed
+        Body: profilePicFile.data,
+        ContentType: profilePicFile.mimetype
+      };
+
+      const s3UploadResult = await s3.upload(uploadParams).promise();
+
+      profilePicUrl = s3UploadResult.Location; // Get the uploaded file URL
+    }
 
     const newUser = new User({
       fullName,
@@ -43,9 +56,10 @@ export const signup = async (req, res) => {
       email,
       password: hashedPassword,
       gender,
-      profilePic: gender === "male" ? boyProfilePic : girlProfilePic,
+      profilePic: profilePicUrl, // Assign profile pic URL
     });
 
+    // Save the user including the profile pic URL
     await newUser.save();
 
     // Generate JWT token here
@@ -66,18 +80,22 @@ export const signup = async (req, res) => {
       }
     });
 
+    // Respond with user details including profile pic URL
     res.status(201).json({
       _id: newUser._id,
       fullName: newUser.fullName,
       email: newUser.email,
       username: newUser.username,
-      profilePic: newUser.profilePic,
+      profilePic: newUser.profilePic, // Include profile pic URL in response
     });
   } catch (error) {
     console.log("Error in signup controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
+
 
 
 export const login = async (req, res) => {
