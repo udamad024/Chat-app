@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 
 import { styled } from '@mui/material/styles';
 
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import DevicesRoundedIcon from '@mui/icons-material/DevicesRounded';
 import EdgesensorHighRoundedIcon from '@mui/icons-material/EdgesensorHighRounded';
 import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
@@ -19,43 +18,48 @@ import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
 const items = [
   {
     icon: <ViewQuiltRoundedIcon />,
-    title: 'Scrum Board: Organize Your Tasks Efficiently',
+    title: 'Audible Message Reception',
     description:
-      'Easily manage your project workflow with our intuitive Scrum Board. Categorize tasks into To-Do, In Progress, and Completed to maintain clear visibility and control over your project`s status.',
-      imageLight: 'url("/feature/scrum_board.jpg")',
-      imageDark: 'url("/feature/scrum_board.jpg")',
+      'Stay connected effortlessly with our text-to-speech feature that reads incoming messages aloud.',
+    imageLight: 'url("/static/images/templates/templates-images/dash-light.png")',
+    imageDark: 'url("/static/images/templates/templates-images/dash-dark.png")',
   },
   {
     icon: <EdgesensorHighRoundedIcon />,
-    title: 'Live Chat: Real-Time Collaboration',
+    title: 'Voice-to-Text Message Sending',
     description:
-      'Enhance team communication with our integrated Live Chat feature. Discuss tasks, share updates, and resolve issues instantly, ensuring everyone stays on the same page and projects progress smoothly.',
-    imageLight: 'url("/feature/live_chat.jpg")',
-    imageDark: 'url("/feature/live_chat.jpg")',
+      'Send messages easily by converting your spoken words into text.',
+    imageLight: 'url("/static/images/templates/templates-images/mobile-light.png")',
+    imageDark: 'url("/static/images/templates/templates-images/mobile-dark.png")',
   },
   {
     icon: <DevicesRoundedIcon />,
-    title: 'Project-Based Team Management',
+    title: 'Low Vision User Accessibility',
     description:
-      'Efficiently manage your team with our Project-Based Team Management tools. Assign roles, track contributions, and streamline collaboration for each specific project, ensuring optimal productivity and clarity.',
-      imageLight: 'url("/feature/team_management.jpg")',
-      imageDark: 'url("/feature/team_management.jpg")',
+      'Integrated software solutions for the Visually Impaired.',
+    imageLight: 'url("/static/images/templates/templates-images/devices-light.png")',
+    imageDark: 'url("/static/images/templates/templates-images/devices-dark.png")',
   },
 ];
 
-const Chip = styled(MuiChip)(({ theme, selected }) => ({
-  ...(selected && {
-    borderColor:
-      theme.palette.mode === 'light'
-        ? theme.palette.primary.light
-        : theme.palette.primary.dark,
-    background:
-      'linear-gradient(to bottom right, hsl(210, 98%, 48%), hsl(210, 98%, 35%))',
-    color: 'hsl(0, 0%, 100%)',
-    '& .MuiChip-label': {
-      color: 'hsl(0, 0%, 100%)',
+const Chip = styled(MuiChip)(({ theme }) => ({
+  variants: [
+    {
+      props: ({ selected }) => selected,
+      style: {
+        background:
+          'linear-gradient(to bottom right, hsl(210, 98%, 48%), hsl(210, 98%, 35%))',
+        color: 'hsl(0, 0%, 100%)',
+        borderColor: theme.palette.primary.light,
+        '& .MuiChip-label': {
+          color: 'hsl(0, 0%, 100%)',
+        },
+        ...theme.applyStyles('dark', {
+          borderColor: theme.palette.primary.dark,
+        }),
+      },
     },
-  }),
+  ],
 }));
 
 export default function Features() {
@@ -69,21 +73,26 @@ export default function Features() {
 
   return (
     <Container id="features" sx={{ py: { xs: 8, sm: 16 } }}>
+      <Box
+        sx={{
+          width: { sm: '100%', md: '90%' },
+          textAlign: { sm: 'left', md: 'center' },
+        }} 
+      >
+        <Typography component="h2" variant="h4" sx={{ color: 'text.primary', fontSize: 'clamp(2.5rem, 10vw, 3rem)', textTransform: 'none' }}>
+          Product Features
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ color: 'text.secondary', mb: { xs: 2, sm: 4 }, fontSize: 'clamp(1.2rem, 10vw, 1.5rem)', textTransform: 'none' }}
+        >
+          Collabor8 offers a comprehensive suite of features tailored specifically for users with Accesibility Barriers, 
+          designed to enhance collaboration, organization, and productivity thorugh a seamless live chat platform
+        </Typography>
+      </Box>
       <Grid container spacing={6}>
-        <Grid item xs={12} md={6}>
-          <div>
-            <Typography component="h2" variant="h4" color="text.primary">
-              Product features
-            </Typography>
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              sx={{ mb: { xs: 2, sm: 4 } }}
-            >
-              ChatApplication offers a comprehensive suite of features tailored specifically for developers, designed to enhance collaboration, organization, and productivity throughout your projects.
-            </Typography>
-          </div>
-          <Grid container item gap={1} sx={{ display: { xs: 'auto', sm: 'none' } }}>
+        <Grid item xs={12} md={12}>
+          <Grid container item sx={{ gap: 1, display: { xs: 'auto', sm: 'none' } }}>
             {items.map(({ title }, index) => (
               <Chip
                 key={index}
@@ -93,90 +102,50 @@ export default function Features() {
               />
             ))}
           </Grid>
-          <Card
-            variant="outlined"
-            sx={{
-              display: { xs: 'auto', sm: 'none' },
-              mt: 4,
-            }}
-          >
-            <Box
-              sx={{
-                backgroundImage: (theme) =>
-                  theme.palette.mode === 'light'
-                    ? items[selectedItemIndex].imageLight
-                    : items[selectedItemIndex].imageDark,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                minHeight: 280,
-              }}
-            />
-            <Box sx={{ px: 2, pb: 2 }}>
-              <Typography color="text.primary" fontWeight="medium" gutterBottom>
-                {selectedFeature.title}
-              </Typography>
-              <Typography color="text.secondary" variant="body2" sx={{ mb: 1.5 }}>
-                {selectedFeature.description}
-              </Typography>
-              <Link
-                color="primary"
-                variant="body2"
-                fontWeight="bold"
-                sx={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  '& > svg': { transition: '0.2s' },
-                  '&:hover > svg': { transform: 'translateX(2px)' },
-                }}
-              >
-                <span>Learn more</span>
-                <ChevronRightRoundedIcon
-                  fontSize="small"
-                  sx={{ mt: '1px', ml: '2px' }}
-                />
-              </Link>
-            </Box>
-          </Card>
           <Stack
             direction="column"
-            justifyContent="center"
-            alignItems="flex-start"
             spacing={2}
             useFlexGap
-            sx={{ width: '100%', display: { xs: 'none', sm: 'flex' } }}
+            sx={{
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+              width: '100%',
+              display: { xs: 'none', sm: 'flex' },
+            }}
           >
             {items.map(({ icon, title, description }, index) => (
               <Card
                 key={index}
                 component={Button}
                 onClick={() => handleItemClick(index)}
-                sx={(theme) => ({
-                  p: 3,
-                  height: 'fit-content',
-                  width: '100%',
-                  background: 'none',
-                  ...(selectedItemIndex === index && {
-                    backgroundColor: 'action.selected',
-                    borderColor:
-                      theme.palette.mode === 'light'
-                        ? 'primary.light'
-                        : 'primary.dark',
+                sx={[
+                  (theme) => ({
+                    p: 3,
+                    height: 'fit-content',
+                    width: '100%',
+                    background: 'none',
+                    '&:hover': {
+                      background:
+                        'linear-gradient(to bottom right, hsla(210, 100%, 97%, 0.5) 25%, hsla(210, 100%, 90%, 0.3) 100%)',
+                      borderColor: 'primary.light',
+                      boxShadow: '0px 2px 8px hsla(0, 0%, 0%, 0.1)',
+                      ...theme.applyStyles('dark', {
+                        background:
+                          'linear-gradient(to right bottom, hsla(210, 100%, 12%, 0.2) 25%, hsla(210, 100%, 16%, 0.2) 100%)',
+                        borderColor: 'primary.dark',
+                        boxShadow: '0px 1px 8px hsla(210, 100%, 25%, 0.5) ',
+                      }),
+                    },
                   }),
-                  '&:hover': {
-                    background:
-                      theme.palette.mode === 'light'
-                        ? 'linear-gradient(to bottom right, hsla(210, 100%, 97%, 0.5) 25%, hsla(210, 100%, 90%, 0.3) 100%)'
-                        : 'linear-gradient(to right bottom, hsla(210, 100%, 12%, 0.2) 25%, hsla(210, 100%, 16%, 0.2) 100%)',
-                    borderColor:
-                      theme.palette.mode === 'light'
-                        ? 'primary.light'
-                        : 'primary.dark',
-                    boxShadow:
-                      theme.palette.mode === 'light'
-                        ? '0px 2px 8px hsla(0, 0%, 0%, 0.1)'
-                        : '0px 1px 8px hsla(210, 100%, 25%, 0.5) ',
-                  },
-                })}
+                  selectedItemIndex === index &&
+                    ((theme) => ({
+                      backgroundColor: 'action.selected',
+                      borderColor: 'primary.light',
+                      ...theme.applyStyles('dark', {
+                        borderColor: 'primary.dark',
+                      }),
+                    })),
+                ]}
               >
                 <Box
                   sx={{
@@ -189,85 +158,38 @@ export default function Features() {
                   }}
                 >
                   <Box
-                    sx={(theme) => ({
-                      color:
-                        theme.palette.mode === 'light' ? 'grey.400' : 'grey.600',
-                      ...(selectedItemIndex === index && {
-                        color: 'primary.main',
+                    sx={[
+                      (theme) => ({
+                        color: 'grey.400',
+                        ...theme.applyStyles('dark', {
+                          color: 'grey.600',
+                        }),
                       }),
-                    })}
+                      selectedItemIndex === index && {
+                        color: 'primary.main',
+                      },
+                    ]}
                   >
                     {icon}
                   </Box>
                   <div>
                     <Typography
-                      color="text.primary"
-                      fontWeight="medium"
                       gutterBottom
+                      sx={{ color: 'text.primary', fontWeight: 'medium', fontSize: 'clamp(1.3rem, 10vw, 1.7rem)', textTransform: 'none' }}
                     >
                       {title}
                     </Typography>
                     <Typography
-                      color="text.secondary"
                       variant="body2"
-                      sx={{ mb: 1.5 }}
+                      sx={{ color: 'text.secondary', mb: 1.5, fontSize: 'clamp(1rem, 10vw, 1.4rem)', textTransform: 'none' }}
                     >
                       {description}
                     </Typography>
-                    <Link
-                      color="primary"
-                      variant="body2"
-                      fontWeight="bold"
-                      sx={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        '& > svg': { transition: '0.2s' },
-                        '&:hover > svg': { transform: 'translateX(2px)' },
-                      }}
-                      onClick={(event) => {
-                        event.stopPropagation();
-                      }}
-                    >
-                      <span>Learn more</span>
-                      <ChevronRightRoundedIcon
-                        fontSize="small"
-                        sx={{ mt: '1px', ml: '2px' }}
-                      />
-                    </Link>
                   </div>
                 </Box>
               </Card>
             ))}
           </Stack>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md={6}
-          sx={{ display: { xs: 'none', sm: 'flex' }, width: '100%' }}
-        >
-          <Card
-            variant="outlined"
-            sx={{
-              height: '100%',
-              width: '100%',
-              display: { xs: 'none', sm: 'flex' },
-              pointerEvents: 'none',
-            }}
-          >
-            <Box
-              sx={{
-                m: 'auto',
-                width: 420,
-                height: 500,
-                backgroundSize: 'contain',
-                backgroundImage: (theme) =>
-                  theme.palette.mode === 'light'
-                    ? items[selectedItemIndex].imageLight
-                    : items[selectedItemIndex].imageDark,
-              }}
-            />
-          </Card>
         </Grid>
       </Grid>
     </Container>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -13,14 +13,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import Typography from '@mui/material/Typography';
-// import ToggleColorMode from './ToggleColorMode';
-
-import Sitemark from './SitemarkIcon';
+import ToggleColorMode from './ToggleColorMode';
 
 function AppAppBar({ mode, toggleColorMode }) {
   const [open, setOpen] = React.useState(false);
-  const navigate = useNavigate(); // Use useNavigate hook to navigate programmatically
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -40,19 +36,16 @@ function AppAppBar({ mode, toggleColorMode }) {
     }
   };
 
+  const navigateTo = useNavigate();
+
   const handleSignupClick = () => {
-    navigate('/login'); // Navigate to the /login route
+    navigateTo('/login')
   };
 
   return (
     <AppBar
       position="fixed"
-      sx={{
-        boxShadow: 0,
-        bgcolor: 'transparent',
-        backgroundImage: 'none',
-        mt: 2,
-      }}
+      sx={{ boxShadow: 0, bgcolor: 'transparent', backgroundImage: 'none', mt: 2 }}
     >
       <Container maxWidth="lg">
         <Toolbar
@@ -63,81 +56,45 @@ function AppAppBar({ mode, toggleColorMode }) {
             justifyContent: 'space-between',
             flexShrink: 0,
             borderRadius: '999px',
-            bgcolor:
-              theme.palette.mode === 'light'
-                ? 'hsla(220, 60%, 99%, 0.6)'
-                : 'hsla(220, 0%, 0%, 0.7)',
             backdropFilter: 'blur(24px)',
             maxHeight: 40,
             border: '1px solid',
             borderColor: 'divider',
+            bgcolor: 'hsla(220, 60%, 99%, 0.6)',
             boxShadow:
-              theme.palette.mode === 'light'
-                ? '0 1px 2px hsla(210, 0%, 0%, 0.05), 0 2px 12px hsla(210, 100%, 80%, 0.5)'
-                : '0 1px 2px hsla(210, 0%, 0%, 0.5), 0 2px 12px hsla(210, 100%, 25%, 0.3)',
+              '0 1px 2px hsla(210, 0%, 0%, 0.05), 0 2px 12px hsla(210, 100%, 80%, 0.5)',
+            ...theme.applyStyles('dark', {
+              bgcolor: 'hsla(220, 0%, 0%, 0.7)',
+              boxShadow:
+                '0 1px 2px hsla(210, 0%, 0%, 0.5), 0 2px 12px hsla(210, 100%, 25%, 0.3)',
+            }),
           })}
         >
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: 'flex',
-              alignItems: 'center',
-              px: 0,
-            }}
-          >
-            <Typography
-              component="span"
-              sx={{
-                fontSize: 'inherit',
-                color: (theme) =>
-                  theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
-              }}
-              variant="h3"
-            >
-              Collabor&nbsp;
-            </Typography>
-            <Sitemark />
+          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
+            <Box
+              component="img"
+              src="logo.png"
+              alt="Logo"
+              sx={{ height: 40, width: 'auto', pr:5 }}
+            />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <Button
                 variant="text"
                 color="info"
-                size="small"
+                size="large"
+                sx={{ fontSize: '1.5rem', textTransform: 'none' }}
                 onClick={() => scrollToSection('features')}
               >
                 Features
               </Button>
-              {/* <Button
-                variant="text"
-                color="info"
-                size="small"
-                onClick={() => scrollToSection('testimonials')}
-              >
-                Testimonials
-              </Button> */}
-              {/* <Button
-                variant="text"
-                color="info"
-                size="small"
-                onClick={() => scrollToSection('highlights')}
-              >
-                Highlights
-              </Button> */}
-              {/* <Button
-                variant="text"
-                color="info"
-                size="small"
-                onClick={() => scrollToSection('pricing')}
-              >
-                Pricing
-              </Button> */}
               <Button
                 variant="text"
                 color="info"
-                size="small"
-                onClick={() => scrollToSection('faq')}
-                sx={{ minWidth: 0 }}
+                size="large"
+                sx={{ fontSize: '1.5rem', textTransform: 'none' }}
+                onClick={() => scrollToSection('teams')}
               >
-                FAQ
+                Team
               </Button>
             </Box>
           </Box>
@@ -148,25 +105,17 @@ function AppAppBar({ mode, toggleColorMode }) {
               alignItems: 'center',
             }}
           >
-            {/* <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} /> */}
-            <Button color="primary" variant="contained" size="small" onClick={handleSignupClick}>
-              Login
+            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+            <Button color="primary" variant="outlined" size="small" sx={{ fontSize: '1.2rem'}} onClick={handleSignupClick}>
+              Sign in
             </Button>
-            {/* <Link to='/signup' className='text-sm hover:underline hover:text-blue-600 mt-2 inline-block'>
-              Login
-          </Link> */}
           </Box>
           <Box sx={{ display: { sm: 'flex', md: 'none' } }}>
             <IconButton aria-label="Menu button" onClick={toggleDrawer(true)}>
               <MenuIcon />
             </IconButton>
             <Drawer anchor="top" open={open} onClose={toggleDrawer(false)}>
-              <Box
-                sx={{
-                  p: 2,
-                  backgroundColor: 'background.default',
-                }}
-              >
+              <Box sx={{ p: 2, backgroundColor: 'background.default' }}>
                 <Box
                   sx={{
                     display: 'flex',
@@ -174,8 +123,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                     justifyContent: 'space-between',
                   }}
                 >
-                  {/* <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} /> */}
-                  <Sitemark />
+                  <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                   <IconButton onClick={toggleDrawer(false)}>
                     <CloseRoundedIcon />
                   </IconButton>
@@ -185,18 +133,12 @@ function AppAppBar({ mode, toggleColorMode }) {
                   Features
                 </MenuItem>
                 <MenuItem onClick={() => scrollToSection('testimonials')}>
-                  Testimonials
-                </MenuItem>
-                <MenuItem onClick={() => scrollToSection('highlights')}>
-                  Highlights
-                </MenuItem>
-                <MenuItem onClick={() => scrollToSection('pricing')}>
-                  Pricing
+                  Team
                 </MenuItem>
                 <MenuItem onClick={() => scrollToSection('faq')}>FAQ</MenuItem>
                 <MenuItem>
-                  <Button color="primary" variant="contained" fullWidth>
-                    Login
+                  <Button color="primary" variant="outlined" fullWidth onClick={handleSignupClick}>
+                    Sign in
                   </Button>
                 </MenuItem>
               </Box>

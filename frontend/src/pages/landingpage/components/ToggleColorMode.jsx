@@ -13,6 +13,7 @@ function ToggleColorMode({ mode, toggleColorMode }) {
       color="primary"
       aria-label="Theme toggle button"
       size="small"
+      sx={{ mr: '26px' }}
     >
       {mode === 'dark' ? (
         <WbSunnyRoundedIcon fontSize="small" />
