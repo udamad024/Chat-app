@@ -132,10 +132,9 @@ function AppAppBar({ mode, toggleColorMode }) {
                 <MenuItem onClick={() => scrollToSection('features')}>
                   Features
                 </MenuItem>
-                <MenuItem onClick={() => scrollToSection('testimonials')}>
+                <MenuItem onClick={() => scrollToSection('teams')}>
                   Team
                 </MenuItem>
-                <MenuItem onClick={() => scrollToSection('faq')}>FAQ</MenuItem>
                 <MenuItem>
                   <Button color="primary" variant="outlined" fullWidth onClick={handleSignupClick}>
                     Sign in
