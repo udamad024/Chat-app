@@ -22,7 +22,7 @@ const MessageContainer = () => {
                     {/* Header */}
                     <div style={{ backgroundColor: 'slategray', padding: '8px 16px', marginBottom: '8px', position: 'sticky', top: 0, zIndex: 10 }}>
                         <span className='label-text'>To:</span>{" "}
-                        <span style={{ color: 'gray', fontWeight: 'bold' }}>{selectedConversation.fullName}</span>
+                        <span style={{ color: 'green', fontWeight: 'bold' }}>{selectedConversation.fullName}</span>
                     </div>
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
                         <Messages />

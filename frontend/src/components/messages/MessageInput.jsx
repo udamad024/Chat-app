@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BsSend } from 'react-icons/bs';
-import { FiMic, FiMicOff } from 'react-icons/fi';
+import { FiMic } from 'react-icons/fi';
 import useSendMessage from '../../hooks/useSendMessage';
-import { Comprehend } from '@aws-sdk/client-comprehend';
 import 'regenerator-runtime/runtime';
 import { AudioConfig, SpeechConfig, SpeechRecognizer } from 'microsoft-cognitiveservices-speech-sdk';
 
@@ -20,29 +19,9 @@ let recognizer;
 
 const MessageInput = () => {
   const [message, setMessage] = useState('');
-  const [detectedLanguage, setDetectedLanguage] = useState('');
   const [isRecognising, setIsRecognising] = useState(false);
   const { loading, sendMessage } = useSendMessage();
   const textRef = useRef();
-
-  // AWS client
-  const comprehend = new Comprehend({
-    region: 'us-west-2',
-    credentials: {
-      accessKeyId: 'YOUR_AWS_ACCESS_KEY_ID',
-      secretAccessKey: 'YOUR_AWS_SECRET_ACCESS_KEY',
-    },
-  });
-
-  // Detect language of the input text
-  const detectLanguage = async () => {
-    try {
-      const detectionResult = await comprehend.detectDominantLanguage({ Text: message });
-      setDetectedLanguage(detectionResult.Languages[0].LanguageCode);
-    } catch (error) {
-      console.error('Error detecting language:', error);
-    }
-  };
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -122,10 +101,6 @@ const MessageInput = () => {
     };
   }, []);
 
-  useEffect(() => {
-    detectLanguage();
-  }, [message]);
-
   return (
     <form className="px-4 my-3" onSubmit={handleSubmit}>
       <div className="w-full relative flex">
@@ -133,10 +108,15 @@ const MessageInput = () => {
           type="button"
           onMouseDown={toggleListener}
           onMouseUp={toggleListener}
-          className="flex items-center justify-center rounded-full h-10 w-10 bg-gray-600 text-white"
-          style={{ position: 'absolute', left: 0 }}
+          className="flex items-center justify-center rounded-full h-10 w-10"
+          style={{
+            backgroundColor: isRecognising ? 'green' : 'gray',
+            color: 'white',
+            position: 'absolute',
+            right: 45,
+          }}
         >
-          {isRecognising ? <FiMicOff size={20} /> : <FiMic size={20} />}
+          <FiMic size={20} />
         </button>
         <input
           type="text"
@@ -148,9 +128,6 @@ const MessageInput = () => {
         <button type="submit" className="flex items-center justify-center rounded-full h-10 w-10 bg-gray-600 text-white">
           {loading ? <div className="loading loading-spinner"></div> : <BsSend size={20} />}
         </button>
-      </div>
-      <div>
-        Detected Language: {detectedLanguage}
       </div>
     </form>
   );

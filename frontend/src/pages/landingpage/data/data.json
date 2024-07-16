@@ -1,0 +1,68 @@
+{
+  "Header": {
+    "title": "Collabor8",
+    "paragraph": "Collabor8 is designed specifically for visually impaired users, offering a seamless platform to enhance your collaboration."
+  },
+  "About": {
+    "paragraph": "With built-in Audible Message Reception and Voice-to-Text message sending, you can effortlessly communicate wihtout accessibility limitations.Collabor8 provides the tools you need to stay productive and efficient. Simplify your communication and stop worrying about barries to your communication with Collabor8",
+    "Why": [
+      "Low Vision User Accessibility",
+      "Live Chat",
+      "Accessibility Features"
+    ],
+    "Why2": [
+    ]
+  },
+  "Team": [
+    {
+      "img": "img/team/ashen.jpg",
+      "name": "Ashen Udara",
+      "job": "Code Alchemis"
+    },
+    {
+      "img": "img/team/faseh.jpg",
+      "name": "Faseh Mirza",
+      "job": "Logic Fyre"
+    },
+    {
+      "img": "img/team/harry.jpg",
+      "name": "Harry Ghotra",
+      "job": "Cloud Crafter"
+    },
+    {
+      "img": "img/team/jun.jpg",
+      "name": "Jun-Jun Llave",
+      "job": "Hyper Code"
+    },
+    {
+      "img": "img/team/kusal.jpg",
+      "name": "Kusal Thiwanka",
+      "job": "Byte Blaze"
+    }
+  ],
+  "Contact": {
+    "address": "4321 California St, San Francisco, CA 12345 ",
+    "phone": "+1 123 456 1234",
+    "email": "info@company.com",
+    "facebook": "fb.com",
+    "twitter": "twitter.com",
+    "youtube": "youtube.com"
+  },
+  "Features": [
+    {
+      "icon": "fa fa-volume-up",
+      "title": "Audible Message Reception",
+      "text": "Stay connected effortlessly with our text-to-speech feature that reads incoming messages aloud, ensuring you never miss a conversation."
+    },
+    {
+      "icon": "fa fa-file-text-o",
+      "title": "Voice-to-Text Message Sending",
+      "text": "Send messages easily by converting your spoken words into text, making communication more convenient and inclusive."
+    },
+    {
+      "icon": "fa fa-comments-o",
+      "title": "Live Chat",
+      "text": "Engage in real-time collaboration with seamless and accessible chat functionalities, fostering efficient communication and teamwork."
+    }
+  ]
+}

@@ -26,7 +26,6 @@ const userSchema = new mongoose.Schema(
 		},
 		profilePic: {
 			type: String,
-			default: "",
 		},
 		// createdAt, updatedAt => Member since <createdAt>
 	},
