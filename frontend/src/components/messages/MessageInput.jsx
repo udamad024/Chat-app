@@ -6,7 +6,7 @@ import 'regenerator-runtime/runtime';
 import { AudioConfig, SpeechConfig, SpeechRecognizer } from 'microsoft-cognitiveservices-speech-sdk';
 
 // Access environment variables
-const API_KEY = 'fe4a34f39a1149df9884a8c1e020298d'
+const API_KEY = ''
 const API_LOCATION = 'eastus'
 
 // Validate environment variables
