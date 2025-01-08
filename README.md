@@ -2,7 +2,9 @@
 
 <img width="968" alt="image" src="https://github.com/user-attachments/assets/b74a767a-0b3a-4f1c-9054-310ec7330e7a" />
 
+![PHOTO-2024-08-11-20-36-17](https://github.com/user-attachments/assets/f18b4aa6-9d97-49b5-aa0a-77a1596a5296)
 
+![PHOTO-2024-08-11-20-36-17](https://github.com/user-attachments/assets/d6ea795d-7189-49d8-8401-6b5a880e6605)
 
 
 ### You might have to install node if the below install command does not work. 
